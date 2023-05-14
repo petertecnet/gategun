@@ -1,24 +1,42 @@
 <template>
-    <div class="login-view">
-      <h1>Welcome to the Login Page</h1>
-      <LoginForm />
+    <div class="login-screen">
+      <div class="login-card">
+        <h2>Login</h2>
+        <form @submit="submitForm">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" v-model="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" v-model="password" required>
+          </div>
+          <div class="form-group">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   </template>
   
   <script>
-  import LoginForm from '@/components/LoginForm';
-  
   export default {
-    components: {
-      LoginForm,
+    name: 'LoginView',
+    data() {
+      return {
+        email: '',
+        password: ''
+      };
     },
-  };
+    methods: {
+      submitForm() {
+        // Lógica para submeter o formulário de login
+      }
+    }
+  }
   </script>
   
-  <style scoped>
-  /* CSS styles specific to LoginView.vue */
-  .login-view {
-    /* Your styles here */
-  }
+  <style>
+  @import "@/assets/css/login-form.css";
   </style>
   
