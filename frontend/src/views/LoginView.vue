@@ -1,29 +1,24 @@
 <template>
     <div class="login-view">
-      <h1>Login View</h1>
-      <LoginForm @submit="handleLoginFormSubmit" />
+      <h1>Welcome to the Login Page</h1>
+      <LoginForm />
     </div>
   </template>
   
   <script>
-  import LoginForm from "@/components/LoginForm";
+  import LoginForm from '@/components/LoginForm';
   
   export default {
-    name: "LoginView",
     components: {
       LoginForm,
-    },
-    methods: {
-      handleLoginFormSubmit(credentials) {
-        // Lógica para lidar com o envio do formulário de login
-      },
     },
   };
   </script>
   
-  <style>
+  <style scoped>
+  /* CSS styles specific to LoginView.vue */
   .login-view {
-    /* Estilos para o componente LoginView */
+    /* Your styles here */
   }
   </style>
   

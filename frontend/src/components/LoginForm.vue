@@ -18,30 +18,33 @@
   </template>
   
   <script>
+  import AuthService from '../services/AuthService';
+  
   export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
       };
     },
     methods: {
-      submitForm(event) {
+      async submitForm(event) {
         event.preventDefault();
-        // Chamada para o serviço de autenticação
-        AuthService.login(this.email, this.password)
-          .then(response => {
-            // Lógica de manipulação da resposta do servidor após o login
-          })
-          .catch(error => {
-            // Lógica de tratamento de erro
-          });
-      }
-    }
+        try {
+          const response = await AuthService.login(this.email, this.password);
+          console.log(response); // Log the response or perform any desired action
+        } catch (error) {
+          console.error(error); // Handle the error or show an error message
+        }
+      },
+    },
   };
   </script>
   
   <style scoped>
-  /* Estilos CSS aqui */
+  /* CSS styles specific to LoginForm.vue */
+  .login-form {
+    /* Your styles here */
+  }
   </style>
   
