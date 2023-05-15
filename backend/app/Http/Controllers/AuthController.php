@@ -53,7 +53,6 @@ public function register(Request $request)
                 'required',
                 'string',
                 'min:8',
-                'confirmed',
                 function ($attribute, $value, $fail) {
                     // Verificar se a senha contém números sequenciais
                     if ($this->hasSequentialNumbers($value)) {
