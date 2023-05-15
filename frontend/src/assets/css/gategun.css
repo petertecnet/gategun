@@ -1,69 +1,332 @@
-/* Estilos gerais do aplicativo Gategun */
-
-/* Cores */
-:root {
-  --primary-color: #0056b3; /* Cor primária */
-  --secondary-color: #ff9900; /* Cor secundária */
-}
-
-/* Estilo para o fundo da tela de login */
 .login-screen {
-  background-color: var(--primary-color);
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #002c43ff, #000000ff);
 }
-
-/* Estilo para o cartão de login */
+body {
+  background-color: #002c43ff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
 .login-card {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para o título */
-h2 {
-  color: var(--primary-color);
-  font-size: 24px;
-  margin-bottom: 1.5rem;
-}
-
-/* Estilo para os campos de formulário */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  color: var(--primary-color);
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--primary-color);
+  width: 300px;
+  padding: 40px;
+  background-color: rgba(253, 253, 253, 0.7);
+  border: 10px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
+  text-align: center;
 }
 
-button[type="submit"] {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  padding: 0.5rem 1rem;
+.login-card h2 {
+  margin-top: 0;
+  color: #000000;
+}
+
+.form-group {
+  margin-bottom: px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-button[type="submit"]:hover {
-  background-color: var(--secondary-color);
+.button:hover {
+  background-color: #6a92bd;
 }
 
-button[type="submit"]:focus {
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+}
+
+.input-container input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-container label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: 5px;
+  font-size: 12px;
+  opacity: 1;
+}
+
+.input-container input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+.input-container input[type="password"] {
+  letter-spacing: 4px;
+}
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.button:focus {
   outline: none;
 }
 
+.button:active {
+  transform: scale(0.98);
+}
+.login-button {
+  background-color: #002c43ff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #00506dff;
+}
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  /* Estilos adicionais para a logo */
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.secondary-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  /* Estilos adicionais para o botão secundário */
+}
+
+.font-logo{
+  color:#007bff;
+  font-size: 20px;
+}
+
+
+/* Estilos para a tela de cadastro */
+.register-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #002c43ff, #001121ff);
+  background-size: cover;
+}
+
+.register-card {
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-card h2 {
+  margin-top: 0;
+}
+
+.register-card form {
+  margin-top: 20px;
+}
+
+.register-card .form-group {
+  margin-bottom: 15px;
+}
+
+.register-card label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.register-card input[type="text"],
+.register-card input[type="email"],
+.register-card input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.register-card button[type="submit"] {
+  background-color: #fff;
+  color: #002c43ff;
+  padding: 8px 16px;
+  border: 1px solid #002c43ff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.register-card button[type="submit"]:hover {
+  background-color: #002c43ff;
+  color: #fff;
+}
+.register-button{
+ background-color: #002c43ff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/* Estilos para a seção do select e do sininho */
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.select-city {
+  margin-right: 10px;
+}
+
+.notification-icon {
+  color: #fff;
+  font-size: 24px;
+}
+
+/* Estilos para o carrossel de datas */
+.date-carousel {
+  margin-bottom: 20px;
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #002c43;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Estilos para a timeline de eventos */
+.event-timeline {
+  margin-bottom: 20px;
+}
+
+/* Estilos para cada card de evento */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para a imagem do evento */
+.event-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para o título do evento */
+.event-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilos para o local do evento */
+.event-location {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilos para a data do evento */
+.event-date {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* Estilos para o valor do evento */
+.event-price {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+
+/* Estilos para a classificação do evento */
+.event-classification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #002c43;
+  color: #fff;
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  margin-top: 10px;
+}
