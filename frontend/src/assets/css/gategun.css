@@ -1,0 +1,23 @@
+/* login-form.css */
+
+.login-container {
+  background-color: #F7F7F7;
+  color: #3C3C3C;
+}
+
+.login-title {
+  color: #FFFFFF;
+}
+
+.login-input {
+  background-color: #FFFFFF;
+  color: #3C3C3C;
+  border: 1px solid #C4C4C4;
+}
+
+.login-button {
+  background-color: #007BFF;
+  color: #FFFFFF;
+}
+
+/* Outros estilos para o formulário de login */

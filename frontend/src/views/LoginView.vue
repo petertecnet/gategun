@@ -36,7 +36,9 @@
   }
   </script>
   
-  <style>
-  @import "@/assets/css/login-form.css";
+  <style scoped>
+  /* Outros estilos específicos do componente LoginView.vue */
+  
+  @import '../assets/css/gategun.css';
   </style>
   
