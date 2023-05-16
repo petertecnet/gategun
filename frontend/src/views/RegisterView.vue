@@ -4,14 +4,17 @@
       <div class="logo-container">
         <img src="../assets/logo.png" alt="Logo" class="logo">
       </div>
-      <h2>GATE</h2><p class="font-logo">GUN</p>
-              <form @submit="submitForm">
-                <div class="form-group">
+      
+      <img src="../assets/gategun.png" alt="gategun-letters" class="letters">
+      
+      <form @submit.prevent="submitForm">
+        <div class="form-group">
           <div class="input-container">
-            <input type="name" id="email" v-model="name" required>
-            <label>Nome</label>
+            <input type="name" id="name" v-model="name" required>
+            <label>Name</label>
           </div>
-        </div><div class="form-group">
+        </div>
+        <div class="form-group">
           <div class="input-container">
             <input type="email" id="email" v-model="email" required>
             <label>Email</label>
@@ -20,51 +23,112 @@
         <div class="form-group">
           <div class="input-container">
             <input type="password" id="password" v-model="password" required>
-            <label>Password</label>
+            <label>Senha</label>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" class="login-button">Login</button>
+        <div>
+          <button class="image-button" type="submit">
+            <img src="../assets/button.png" alt="Imagem">
+            <span class="button-text">Concluir</span>
+          </button>
         </div>
       </form>
+      
       <div class="button-group">
-        <button class="secondary-button" @click="redirectLogin">Já tem cadastro?</button>
+        <button class="image-button" @click="redirectToLogin">
+          <img src="../assets/button.png" alt="Imagem">
+          <span class="button-text">Jà tenho cadastro</span>
+        </button>
+      </div>
+      
+      <div class="button-group">
+        <button class="image-button">
+          <img src="../assets/button.png" alt="Imagem">
+          <span class="button-text">Esqueceu a senha?</span>
+        </button>
       </div>
     </div>
+    <div>
+
+  <!-- Modal -->
+  <div v-if="modalVisible" class="modal">
+    <div class="modal-content">
+      <!-- Conteúdo do modal -->
+      <h3>Erro</h3>
+      <p>{{ errorMessage }}</p>
+
+      <!-- Botão para fechar o modal -->
+      <button @click="closeModal">Fechar</button>
+    </div>
   </div>
+</div>
+
+  </div>
+    <div>
+</div>
 </template>
-  
 
 <script>
 import AuthService from '@/services/AuthService';
-
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      name: '',
       email: '',
       password: '',
+      errorModalVisible: true,
+      errorMessage: '',
+      modalVisible: false,
     };
   },
+  
   methods: {
-    submitForm() {
-      AuthService.register(this.name, this.email, this.password)
-        .then(response => {
-          // Lógica após o registro bem-sucedido
-          console.log(response);
-        })
-        .catch(error => {
-          // Tratamento de erro
-          console.error(error);
-        });
-    },
-    redirectLogin(){
-      this.$router.push('/');
+      submitForm() {
+AuthService.login(this.email, this.password)
+  .then(response => {
+    if (response.success) {
+      // Login bem-sucedido, redirecionar para a página Home
+      this.$router.push('/home');
+    } else {
+      // Exibir mensagem de erro no modal
+      this.errorMessage = response.message;
+      this.errorModalVisible = true;
     }
+  })
+  .catch(error => {
+      if (error.response && error.response.data && error.response.data.message) {
+          this.showAlert(error.response.data.message);
+        } else {
+          this.showAlert('Ocorreu um erro desconhecido.');
+        }
+  });
+},
+
+    
+redirectToLogin() {
+      this.$router.push('/');
+    },
+    
+    showAlert(message) {
+Swal.fire({
+  title: 'Erro',
+  text: message,
+  icon: 'error',
+  customClass: {
+    container: 'my-modal-container',
+    title: 'my-modal-title',
+    content: 'my-modal-content',
+    confirmButton: 'my-modal-confirm-button',
+  },
+  // Mais opções de estilo aqui
+});
+},
   }
 };
 </script>
-  <style scoped>
-  @import url('@/assets/css/gategun.css');
-  </style>
-  
+
+<style scoped>
+/* Estilos específicos do componente LoginView.vue */
+
+@import url('@/assets/css/gategun.css');
+</style>

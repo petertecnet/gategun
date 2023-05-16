@@ -2,8 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #002c43ff, #000000ff);
 }
 body {
   background-color: #002c43ff;
@@ -14,7 +12,7 @@ body {
 .login-card {
   width: 300px;
   padding: 40px;
-  background-color: rgba(253, 253, 253, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   border: 10px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   text-align: center;
@@ -26,7 +24,7 @@ body {
 }
 
 .form-group {
-  margin-bottom: px;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -127,19 +125,46 @@ body {
   background-color: #00506dff;
 }
 .logo-container {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: left;
+  margin-bottom: 0px;
 }
 
 .logo {
-  width: 150px;
-  height: 150px;
+  width: 30px;
+  height: 30px;
   /* Estilos adicionais para a logo */
 }
+
 .button-group {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+.image-button {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition:  padding-left 0.8s ease; /* Transição mais lenta */
+  /* Estilos padrão */
+}
+
+.image-button:hover {
+  padding-left:28px;
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: white;
+}
+.close-button {
+  background-image: url('../button.png');
+  /* Defina o tamanho e outros estilos conforme necessário */
 }
 
 .secondary-button {
