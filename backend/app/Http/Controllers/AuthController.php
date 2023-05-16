@@ -90,6 +90,16 @@ public function register(Request $request)
         ], 422);
     }
 }
+public function checkAuth()
+{
+    if (auth()->check()) {
+        // Usuário autenticado
+        return response()->json(['authenticated' => true]);
+    } else {
+        // Usuário não autenticado
+        return response()->json(['authenticated' => false]);
+    }
+}
 public function login(Request $request)
 {
     $credentials = $request->validate([
@@ -99,7 +109,7 @@ public function login(Request $request)
 
     if (!Auth::attempt($credentials)) {
         return response()->json([
-            'message' => 'Login failed. Invalid credentials.',
+            'message' => 'Senha inválida ou este email ainda não foi cadastrado.',
             'success' => false,
         ], 401);
     }
