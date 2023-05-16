@@ -57,6 +57,9 @@ export default {
           // Tratamento de erro
           console.error(error);
         });
+    },
+    redirectLogin(){
+      this.$router.push('/');
     }
   }
 };

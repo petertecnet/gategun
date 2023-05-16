@@ -1,0 +1,125 @@
+/* home.css */
+
+.home-screen {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  .custom-select {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+  }
+  
+  .select-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .select-icon {
+    margin-right: 10px;
+    color: #666666;
+  }
+  
+  .notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    color: #ffffff;
+    font-size: 16px;
+  }
+  
+  .events-carousel {
+    padding: 20px;
+  }
+  
+  .event-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 20px;
+    color: #333333;
+  }
+  
+  .timeline {
+    margin-top: 20px;
+  }
+  
+  .event-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .event-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  
+  .event-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .event-location {
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+  
+  .event-date {
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+  
+  .event-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .event-rating {
+    display: flex;
+    align-items: center;
+    color: #666666;
+  }
+  
+  .rating-label {
+    margin-right: 5px;
+  }
+  
+  .rating-stars {
+    color: #ffcc00;
+  }
+  

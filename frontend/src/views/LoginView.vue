@@ -8,14 +8,14 @@
                 <form @submit="submitForm">
           <div class="form-group">
             <div class="input-container">
-              <input type="email" id="email" v-model="email" required>
+              <input type="email" id="email"  v-model="email" required>
               <label>Email</label>
             </div>
           </div>
           <div class="form-group">
             <div class="input-container">
               <input type="password" id="password" v-model="password" required>
-              <label>Password</label>
+              <label>Senha</label>
             </div>
           </div>
           <div class="form-group">
@@ -28,31 +28,65 @@
         </div>
       </div>
     </div>
+    <modal v-if="errorModalVisible" @close="closeModal">
+    <h3>Erro</h3>
+    <p>{{ errorMessage }}</p>
+  </modal>
   </template>
   
   
-  <script>
-  import '@/assets/css/gategun.css';
+<script>
+import AuthService from '@/services/AuthService';
+
+export default {
+  // Restante do seu código
   
-  export default {
-    name: 'LoginView',
-    data() {
-      return {
-        email: '',
-        password: ''
-      };
-    },
-    methods: {
-      submitForm() {
-        // Lógica para submeter o formulário de login
-      },
-      
-    redirectToRegister() {
-    this.$router.push('/register');
+  data() {
+    return {
+      // Outros dados do componente
+      errorModalVisible: false,
+      errorMessage: ''
+    };
   },
+  
+  methods: {
+    // Restante dos seus métodos
+    
+    submitForm() {
+        
+        console.log(this.email); 
+      AuthService.login(this.email, this.password)
+        .then(response => {
+            console.log(this.email); 
+          if (response.success) {
+            // Login bem-sucedido, redirecionar para a página Home
+            console.log('oi'); 
+            this.$router.push('/home');
+          } else {
+            // Exibir mensagem de erro no modal
+            console.log('oi'); 
+            this.showModal(response.message);
+          }
+        })
+        .catch(error => {
+          // Tratamento de erro
+          console.error(error);
+        });
+    },
+    redirectToRegister(){
+        this.$router.push('/register');
+    },
+    showModal(message) {
+      this.errorMessage = message;
+      this.errorModalVisible = true;
+    },
+    
+    closeModal() {
+      this.errorModalVisible = false;
     }
   }
-  </script>
+};
+</script>
 <style scoped>
 /* Outros estilos específicos do componente LoginView.vue */
 

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import router from '../router/index.js';
+
 
 const AuthService = {
   login(email, password) {
@@ -6,10 +8,15 @@ const AuthService = {
       email: email,
       password: password
     };
-
-    return axios.post('/api/login', data)
+    return axios.post('http://127.0.0.1:8000/api/login', data)
       .then(response => {
-        // Lógica de manipulação da resposta do servidor após o login
+        if (response.data.success) {
+          // Login bem-sucedido, redirecionar para a página Home
+          router.push('/home');
+        } else {
+          // Exibir mensagem de erro no console
+          console.error(response.data.message);
+        }
         return response.data;
       })
       .catch(error => {
