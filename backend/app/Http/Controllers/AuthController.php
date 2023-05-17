@@ -1,15 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
-
 use Illuminate\Validation\ValidationException;
+
+
 class AuthController extends Controller
 {
     // ...
@@ -90,31 +93,27 @@ public function register(Request $request)
         ], 422);
     }
 }
-public function checkAuth()
-{
-    if (auth()->check()) {
-        // Usuário autenticado
-        return response()->json(['authenticated' => true]);
-    } else {
-        // Usuário não autenticado
-        return response()->json(['authenticated' => false]);
-    }
-}
+
+
+
 public function login(Request $request)
 {
+    // Valide as credenciais
     $credentials = $request->validate([
         'email' => 'required|string|email',
         'password' => 'required|string',
     ]);
 
-    if (!Auth::attempt($credentials)) {
+    // Tente autenticar o usuário usando o guard 'api'
+    if (!Auth::guard('api')->attempt($credentials)) {
         return response()->json([
             'message' => 'Senha inválida ou este email ainda não foi cadastrado.',
             'success' => false,
         ], 401);
     }
 
-    $user = $request->user();
+    // Autenticação bem-sucedida
+    $user = Auth::guard('api')->user();
     $token = $user->createToken('authToken')->plainTextToken;
 
     return response()->json([
@@ -128,14 +127,17 @@ public function login(Request $request)
 
 public function logout(Request $request)
 {
-    $userId = Auth::id();
+    $user = $request->user();
 
-    // Realizar o logout do usuário com base no $userId
+    // Revoga todos os tokens de acesso pessoal do usuário
+    $user->tokens()->delete();
 
     return response()->json([
-        'message' => 'Logged out successfully',
+        'message' => 'Logged out successfully.',
+        'success' => true,
     ], 200);
 }
+
 
     public function refresh(Request $request)
     {
@@ -154,4 +156,28 @@ public function logout(Request $request)
     {
         return response()->json($request->user());
     }
+
+   // Solicitação de verificação de autenticação
+   public function checkAuth(Request $request)
+   {
+       $token = $request->bearerToken(); // Obtém o token do cabeçalho Authorization
+   
+       if ($token) {
+           $user = PersonalAccessToken::where('token', $token)->first(); // Verifica se o token corresponde a um usuário
+   
+           if ($user) {
+               return response()->json([
+                   'message' => 'Autenticado.',
+                   'success' => true,
+               ], 200);
+           }
+       }
+   
+       return response()->json([
+           'message' => 'Não autenticado.',
+           'success' => false,
+       ], 401);
+   }
+   
+    
 }

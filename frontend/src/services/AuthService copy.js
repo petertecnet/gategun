@@ -44,6 +44,7 @@ const checkAuth = () => {
     });
 };
 
+
 export default {
   login,
   checkAuth

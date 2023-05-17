@@ -39,6 +39,14 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+        'sanctum' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
         ],
     ],
 
