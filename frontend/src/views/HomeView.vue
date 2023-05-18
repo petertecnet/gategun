@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <MenuBar />
-    <h1>Welcome, {{ user ? user.name : '' }}</h1>
-    <!-- Conteúdo da página Home -->
-  </div>
+  <q-page-container>
+    <NavBarHamburger />
+    <!-- Conteúdo da página -->
+  </q-page-container>
 </template>
 
 <script>
-import MenuBar from '@/components/MenuBarComponent.vue';
+import NavBarHamburger from '@/components/NavBarHamburger.vue';
+
 import AuthService from '@/services/AuthService';
 
 export default {
   name: 'HomeView',
   components: {
-    MenuBar,
+    NavBarHamburger,
   },
   data() {
     return {
