@@ -1,63 +1,98 @@
+/* Estilos gerais */
+body {
+  background-color: #002c43ff;
+}
+
+.logo-container {
+  text-align: left;
+  margin-left: 30px;
+  margin-bottom: 0px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.image-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: padding-left 0.8s ease; /* Transição mais lenta */
+}
+
+.image-button:hover {
+  padding-left: 28px;
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: white;
+}
+
+/* Estilos para a tela de login */
 .login-screen {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-body {
-  background-color: #002c43ff;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-}
+
 .login-card {
-  width: 300px;
-  padding: 40px;
+  width: 100%;
+  max-width: 550px;
+  padding: 30px;
+  margin-top: -10px;
   background-color: rgba(0, 0, 0, 0.7);
-  border: 10px solid rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  border: 10px solid rgba(255, 255, 255, 1);
+  border-radius: 54px;
   text-align: center;
 }
 
-.login-card h2 {
-  margin-top: 0;
-  color: #000000;
+.form {
+  margin-top: 20px;
+}
+
+.label {
+  color: #ffffff;
+  font-size: 20px;
+  text-align: left;
 }
 
 .form-group {
   margin-bottom: 20px;
 }
 
-.button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #6a92bd;
-}
-
 .input-container {
   position: relative;
   margin-bottom: 20px;
+  transition: padding-top 0.8s ease; /* Transição mais lenta */
 }
 
 .input-container input {
   width: 100%;
   padding: 10px;
   border: none;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  border-radius: 10px;
+  background-color: #002132;
+  color: #ffffff;
   font-size: 16px;
 }
 
 .input-container input:focus {
   outline: none;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #02608f;
+  box-shadow: #0056b3;
 }
 
 .input-container label {
@@ -65,28 +100,33 @@ body {
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  color: #fff;
+  color: #ffffff;
   font-size: 14px;
-  opacity: 0.7;
+  opacity: 7;
   transition: all 0.3s ease-in-out;
   pointer-events: none;
 }
 
 .input-container input:focus + label,
 .input-container input:not(:placeholder-shown) + label {
-  top: 5px;
-  font-size: 12px;
-  opacity: 1;
+  top: 10px;
+  font-size: 15px;
+  opacity: 0.8;
 }
 
 .input-container input::placeholder {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
+  font-size: 1px;
 }
 
 .input-container input[type="password"] {
   letter-spacing: 4px;
 }
+
+.input-container:hover {
+  padding-top: 28px;
+}
+
 .button {
   background-color: #007bff;
   color: #fff;
@@ -111,6 +151,7 @@ body {
 .button:active {
   transform: scale(0.98);
 }
+
 .login-button {
   background-color: #002c43ff;
   color: white;
@@ -124,162 +165,8 @@ body {
 .login-button:hover {
   background-color: #00506dff;
 }
-.logo-container {
-  text-align: left;
-  margin-bottom: 0px;
-}
 
-.logo {
-  width: 30px;
-  height: 30px;
-  /* Estilos adicionais para a logo */
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-.image-button {
-  position: relative;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition:  padding-left 0.8s ease; /* Transição mais lenta */
-  /* Estilos padrão */
-}
-
-.image-button:hover {
-  padding-left:28px;
-}
-
-.button-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 16px;
-  color: white;
-}
-.close-button {
-  background-image: url('../button.png');
-  /* Defina o tamanho e outros estilos conforme necessário */
-}
-
-.secondary-button {
-  background-color: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  /* Estilos adicionais para o botão secundário */
-}
-
-.font-logo{
-  color:#007bff;
+.font-logo {
+  color: #007bff;
   font-size: 20px;
-}
-
-
-/* Estilos para a tela de cadastro */
-.register-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to bottom right, #002c43ff, #001121ff);
-  background-size: cover;
-}
-
-.register-card {
-  width: 300px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.register-card h2 {
-  margin-top: 0;
-}
-
-.register-card form {
-  margin-top: 20px;
-}
-
-.register-card .form-group {
-  margin-bottom: 15px;
-}
-
-.register-card label {
-  display: block;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-.register-card input[type="text"],
-.register-card input[type="email"],
-.register-card input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.register-card button[type="submit"] {
-  background-color: #fff;
-  color: #002c43ff;
-  padding: 8px 16px;
-  border: 1px solid #002c43ff;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.register-card button[type="submit"]:hover {
-  background-color: #002c43ff;
-  color: #fff;
-}
-.register-button{
- background-color: #002c43ff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-
-/* Estilos para HomeView.vue */
-.home-screen {
-  background-color: #002c43ff;
-  color: #ffffff;
-  padding: 20px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.select-city {
-  background-color: #ffffff;
-  color: #000000;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.notification-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: #ffffff;
-  color: #000000;
-  border-radius: 50%;
 }

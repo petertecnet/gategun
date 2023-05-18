@@ -50,81 +50,119 @@
     </div>
     <div>
 
-  <!-- Modal -->
-  <div v-if="modalVisible" class="modal">
-    <div class="modal-content">
-      <!-- Conteúdo do modal -->
-      <h3>Erro</h3>
-      <p>{{ errorMessage }}</p>
+      <!-- Modal -->
+      <div v-if="modalVisible" class="modal">
+        <div class="modal-content">
+          <!-- Conteúdo do modal -->
+          <h3>Erro</h3>
+          <p>{{ errorMessage }}</p>
 
-      <!-- Botão para fechar o modal -->
-      <button @click="closeModal">Fechar</button>
+          <!-- Botão para fechar o modal -->
+          <button @click="redirectToLogin">Fechar</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-  </div>
-    <div>
-</div>
 </template>
 
-<script>
-import AuthService from '@/services/AuthService';
+<script>import AuthService from '@/services/AuthService';
 import Swal from 'sweetalert2';
+
 export default {
   data() {
     return {
+      name: '',
       email: '',
       password: '',
-      errorModalVisible: true,
-      errorMessage: '',
       modalVisible: false,
+      errorMessage: '',
     };
   },
-  
+
   methods: {
-      submitForm() {
-AuthService.login(this.email, this.password)
-  .then(response => {
-    if (response.success) {
-      // Login bem-sucedido, redirecionar para a página Home
-      this.$router.push('/home');
-    } else {
-      // Exibir mensagem de erro no modal
-      this.errorMessage = response.message;
-      this.errorModalVisible = true;
-    }
-  })
-  .catch(error => {
+    submitForm() {
+  const userData = {
+    name: this.name,
+    email: this.email,
+    password: this.password,
+  };
+
+  AuthService.register(userData)
+    .then(response => {
+      // Verifique a resposta do servidor e tome a ação apropriada
+      // por exemplo, exibir mensagem de sucesso ou erro
+      this.showAlert2(response.data.message);
+
+      // Autenticar o usuário automaticamente
+      AuthService.login(userData)
+        .then(response => {
+          if (response.data.success) {
+            // Login bem-sucedido, redirecionar para a página Home
+            this.$router.push('/home');
+          } else {
+            // Exibir mensagem de erro no modal
+            this.errorMessage = response.data.message;
+            this.errorModalVisible = true;
+          }
+        })
+        .catch(error => {
+          // Trate o erro aqui
+          if (error.response && error.response.data && error.response.data.message) {
+            this.showAlert(error.response.data.message);
+          } else {
+            this.showAlert('Ocorreu um erro desconhecido durante o login automático.');
+          }
+        });
+    })
+    .catch(error => {
+      // Trate o erro aqui
       if (error.response && error.response.data && error.response.data.message) {
-          this.showAlert(error.response.data.message);
-        } else {
-          this.showAlert('Ocorreu um erro desconhecido.');
-        }
-  });
+        this.showAlert(error.response.data.message);
+      } else {
+        this.showAlert('Ocorreu um erro desconhecido durante o registro.');
+      }
+    });
 },
 
-    
-redirectToLogin() {
+
+    redirectToLogin() {
       this.$router.push('/');
     },
-    
+
+    closeModal() {
+      this.modalVisible = false;
+    },
+
     showAlert(message) {
-Swal.fire({
-  title: 'Erro',
-  text: message,
-  icon: 'error',
-  customClass: {
-    container: 'my-modal-container',
-    title: 'my-modal-title',
-    content: 'my-modal-content',
-    confirmButton: 'my-modal-confirm-button',
-  },
-  // Mais opções de estilo aqui
-});
-},
+      Swal.fire({
+        title: 'Erro',
+        text: message,
+        icon: 'error',
+        customClass: {
+          container: 'my-modal-container',
+          title: 'my-modal-title',
+          content: 'my-modal-content',
+          confirmButton: 'my-modal-confirm-button',
+        },
+        // Mais opções de estilo aqui
+      });
+    },showAlert2(message) {
+      Swal.fire({
+        title: 'Sucesso',
+        text: message,
+        icon: 'success',
+        customClass: {
+          container: 'my-modal-container',
+          title: 'my-modal-title',
+          content: 'my-modal-content',
+          confirmButton: 'my-modal-confirm-button',
+        },
+        // Mais opções de estilo aqui
+      });
+    },
   }
 };
+
 </script>
 
 <style scoped>
