@@ -2,31 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PersonalAccessToken extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Producer extends Model
 {
+
     use HasFactory;
-
-    protected $fillable = [
+        protected $fillable = [
         'name',
-        'token',
-        'abilities',
-        'last_used_at',
-        'expires_at',
+        'image_url',
+        'location',
     ];
 
-    protected $casts = [
-        'last_used_at' => 'datetime',
-        'expires_at' => 'datetime',
-    ];
-
-    /**
-     * Get the tokenable model that the token belongs to.
-     */
-    public function tokenable()
-    {
-        return $this->morphTo();
-    }
+    // Nome da tabela associada ao modelo
+    protected $table = 'Producers';
 }
