@@ -19,22 +19,31 @@
     <div class="row g-4">
         
         @if (count($events) > 0)
-            @foreach ($events as $event)
-              
-        <div class="col-md-4">
-            <a href="{{ route('events.show', $event->id) }}" class="text-decoration-none">
-                <div class="bg-secondary rounded h-100 p-4 d-flex flex-column align-items-center">
-                    <img src="{{ asset('storage/'.$event->image) }}" alt="{{ $event->name }}" style="max-width: 50%; height: auto;">
-                    <p class="my-4 text-center  text-gategun">{{ $event->name }}</p>
-                    <p class="my-4 text-center text-primary">{{ $event->date }} | R${{ $event->price }} </p>
-                    <p class="my-4 text-center text-primary">{{ $event->production_name }}</p>
+        @foreach ($events as $event)
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 ">
+                    <a href="{{ route('events.show', $event->id) }}" >  <img src="{{ asset('storage/'.$event->image) }}" alt="{{ $event->name }}" class="card-img-top">
+                    </a>
+                    <div class="card-body bg-secondary">
+                        <h5 class="card-title text-gategun">{{ $event->name }}</h5>
+                        <p class="card-text text-primary ">
+                          
+                            {{ $event->date->format('d/m/Y') }} ás {{ $event->time }} 
+                            <p>R${{ $event->price }}</p> 
+                             
+                        </p>
+                    </div>
+                    <div class=" card-footer border-0 text-center">
+                     
+                        <a href="{{ route('productions.show', $event->production_id) }}" class="text-dark "> {{ $event->production_name }}</a>
+                    </div>
                 </div>
-            </a>
+            </div>
+        @endforeach
+    @else
+        <div class="col-md-12">
+            <p class="text-center text-gategun">Nenhum evento cadastrado para este produtor.</p>
         </div>
-            @endforeach
-        @else
-            <p>Nenhum evento cadastrado para este produtor.</p>
-        @endif
-       
+    @endif
     </div>
 @endsection

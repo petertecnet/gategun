@@ -10,6 +10,8 @@ class Ticket extends Model
 
     protected $fillable = [
         'event_id',
+        'event_name',
+        'production_name',
         'name',
         'type',
         'price',
@@ -23,5 +25,8 @@ class Ticket extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }  public function production()
+    {
+        return $this->belongsTo(Production::class);
     }
 }

@@ -210,9 +210,12 @@
               <div class="h-100 bg-secondary rounded p-4">
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+                  @foreach ($message->all() as $message)
+                      <li>{{ $message }}</li>
+                  @endforeach
                 </ul>
             </div>
           </div>

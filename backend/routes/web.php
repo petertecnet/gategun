@@ -27,6 +27,10 @@ Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('ticket
 Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
 Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
 Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+Route::post('/tickets/payment', [TicketController::class, 'payment'])->name('tickets.payment');
+Route::get('/tickets/checkPaymentStatus/{idorder}', [TicketController::class, 'checkPaymentStatus'])->name('tickets.checkPaymentStatus');
+
+
 
 
 Route::get('/productions', [ProductionController::class, 'index'])->name('productions.index');
@@ -36,3 +40,5 @@ Route::get('/productions/{production}', [ProductionController::class, 'show'])->
 Route::get('/productions/{production}/edit', [ProductionController::class, 'edit'])->name('productions.edit');
 Route::put('/productions/{production}', [ProductionController::class, 'update'])->name('productions.update');
 Route::delete('/productions/{production}', [ProductionController::class, 'destroy'])->name('productions.destroy');
+
+

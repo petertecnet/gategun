@@ -61,14 +61,16 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $tickets = Ticket::where('event_id', $event->id)->get();
-        
+        $event->date = Carbon::parse($event->date);
         return view('crud.events.show', compact('event', 'tickets'));
     }
     
 
     public function edit(Event $event)
     {
-        return view('events.edit', compact('event'));
+        
+        $tickets = Ticket::where('event_id', $event->id)->get();
+        return view('crud.events.update', compact('event', 'tickets'));
     }
 
     public function update(Request $request, Event $event)
@@ -91,7 +93,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         // Armazenar o ID do produtor antes de excluir o evento
-        $producerId = $event->producer_id;
+        $producerId = $event->production_id;
     
         $event->delete();
     

@@ -1,60 +1,56 @@
 @extends('layouts.template')
 
 @section('content')
+
+<a href="{{ route('tickets.show', $event->id) }}" class="btn btn-primary btn-fixed-gategun">Ingressos R${{$event->price}}</a>
 <div class="container-fluid pt-4 px-4 ">
-    <div class="row g-4">
-        <div class="col-md-12">
-            <div class="h-100 bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content-center">
-                <img src="{{ asset('storage/' . $event->image) }}" alt="" class="img-fluid mx-auto d-block rounded ">
+    <div class="row g-4">  
+        
+        <div class="col-md-8">
+            <div class=" bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content">
+                <img src="{{ asset('storage/' . $event->image) }}" alt="" class="card-img-top img-event-gategun" >
+                
+            </div>
+        </div>
+              
+        <div class="col-md-4">
+            <div class="h-10 bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content-">
+                <p class="text-info">    {{$event->name}} </p>
+                <a href="https://www.google.com/maps?q={{ $event->location }}" target="_blank" class="btn btn-primary m-2">
+                    <i class="fa-solid fa-location"></i> 
+                    Localização
+                </a>
+                <p class="text-primary">       <a href="{{ route('productions.show', $event->production_id) }}" class="text-primary "> {{ $event->production_name }}</a>
+                </p>
+            <hr class="bg-primary">
+            <p> {{ $event->date->formatLocalized('%A') }}</p>
+            
+
+                <p>   {{ $event->date->format('d/m/Y') }} ás {{ $event->time }} </p> 
+                <p>R${{ $event->price }}</p> 
+                
+               
+                                
             </div>
         </div>
         <hr>
-
-        <!-- Exibindo a lista de ingressos como cards -->
-        <h2>Ingressos</h2>
-
-        <!-- Botão para abrir o modal de cadastro de ingresso -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
-            Cadastrar Ingresso
-        </button>
-<hr>
-       
-        <div class="row"> <!-- Adicione esta div para envolver o loop de ingressos -->
-            @if($tickets && count($tickets) > 0)
-            @foreach ($tickets as $ticket)
-                <div class="col-sm-12 col-md-6 col-xl-4">
-                    <div class="h-200 bg-gategun rounded p-5">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <h6 class="mb-0 text-gategunwhite">{{ $ticket->name }}</h6>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3 ">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-center">
-                                        <h6 class="text-gategunwhite">{{ 'R$ ' . number_format($ticket->price, 2, ',', '.') }}</h6>
-                                    </div>
-                                    
-                                    <div class="d-flex w-100 justify-content-left ">
-                                        <div class="input-group ">
-                                            <button type="button" class="btn btn-secondary" onclick="decreaseQuantity()">-</button>
-                                            <input id="quantityInput" type="number" class="form-control text-center" value="0" min="0">
-                                            <button type="button" class="btn btn-secondary" onclick="increaseQuantity()">+</button>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+        <div class="col-md-12">
+            <div class="accordion-item bg-transparent  bg-info">
+                <h2 class="accordion-header  align-items-center justify-content" id="headingTwo">
+                    <button class="accordion-button collapsed " type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                       Descrição
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{$event->description}} 
                     </div>
                 </div>
-            @endforeach
-            @else
-                <div class="col-md-12">
-                    <p>Nenhum ingresso cadastrado para este produtor.</p>
-                </div>
-            @endif
-        </div> <!-- Feche a div envolvendo o loop de ingressos -->
-        
-    
+            </div>
+        </div>
     <div class="col-md-12 ">
         <div class="bg-secondary rounded h-200 p-4">
             <iframe

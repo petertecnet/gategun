@@ -7,6 +7,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class ProductionController extends Controller
 {
@@ -29,21 +30,43 @@ class ProductionController extends Controller
             'location' => 'required|string|max:255',
         ]);
     
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/images');
-            $image = Image::make(storage_path('app/' . $imagePath));
-            $image->fit(350, 350);
-            $image->save();
-            $imagePath = 'storage/' . str_replace('public/', '', $imagePath);
+        $user = Auth::user();
+        $avatar = $request->file('image');
+        $fileName = $user->id . '-' . $user->cpf . '-avatar.' . $avatar->getClientOriginalExtension();
+        $directoryName = $user->id . '-' . $user->cpf;
+    
+        $directoryPath = public_path('avatars/' . $directoryName);
+    
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0755, true);
         }
+    
+        // Check if there's a file with the same name as the uploaded file
+        if (File::exists($directoryPath . '/' . $avatar->getClientOriginalName())) {
+            // Generate a new unique file name by adding a number to the end of the original file name
+            $count = 1;
+            $newFileName = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '_' . $count . '.' . $avatar->getClientOriginalExtension();
+    
+            while (File::exists($directoryPath . '/' . $newFileName)) {
+                $count++;
+                $newFileName = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '_' . $count . '.' . $avatar->getClientOriginalExtension();
+            }
+    
+            // Rename the existing file with the new unique name
+            File::move($directoryPath . '/' . $avatar->getClientOriginalName(), $directoryPath . '/' . $newFileName);
+        } else {
+            // If the file does not exist, simply move the uploaded file to the avatars directory
+            $avatar->move($directoryPath, $avatar->getClientOriginalName());
+        }
+    
+        $imagePath = 'avatars/' . $directoryName . '/' . $fileName;
     
         $production = new Production([
             'name' => $request->name,
             'image' => $imagePath,
             'location' => $request->location,
-            'user_id' => Auth::user()->id,
-            'user_name' => Auth::user()->name,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
         ]);
     
         $production->save();
@@ -59,9 +82,8 @@ class ProductionController extends Controller
 
     public function edit(Production $production)
     {
-        return view('productions.edit', compact('production'));
+        return view('crud.productions.update', compact('production'));
     }
-
     public function update(Request $request, Production $production)
     {
         $request->validate([
@@ -69,24 +91,46 @@ class ProductionController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'location' => 'required|string|max:255',
         ]);
-
-        $imageUrl = $production->image_url;
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/images');
-            $image = Image::make(storage_path('app/' . $imagePath));
-            $image->fit(350, 350);
-            $image->save();
-            $imageUrl = asset('storage/' . str_replace('public/', '', $imagePath));
+    
+        $imagePath = $production->image;
+        $directoryPath = public_path('logos');
+    
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0755, true);
         }
-
+    
+        if ($request->hasFile('image')) {
+            $logo = $request->file('image');
+    
+            // Check if there's a file with the same name as the uploaded file
+            if (File::exists($directoryPath . '/' . $logo->getClientOriginalName())) {
+                // Generate a new unique file name by adding a number to the end of the original file name
+                $count = 1;
+                $newFileName = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME) . '_' . $count . '.' . $logo->getClientOriginalExtension();
+    
+                while (File::exists($directoryPath . '/' . $newFileName)) {
+                    $count++;
+                    $newFileName = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME) . '_' . $count . '.' . $logo->getClientOriginalExtension();
+                }
+    
+                // Rename the existing file with the new unique name
+                File::move($directoryPath . '/' . $logo->getClientOriginalName(), $directoryPath . '/' . $newFileName);
+    
+                $imagePath = 'logos/' . $newFileName;
+            } else {
+                // If the file does not exist, simply move the uploaded file to the logos directory
+                $logo->move($directoryPath, $logo->getClientOriginalName());
+                $imagePath = 'logos/' . $logo->getClientOriginalName();
+            }
+        }
+    
         $production->update([
             'name' => $request->name,
-            'image_url' => $imageUrl,
+            'image' => $imagePath,
             'location' => $request->location,
         ]);
-
-        return redirect()->route('productions.index')->with('success', 'Produção atualizada com sucesso!');
+    
+        return redirect()->route('productions.show', $production->id)->with('success', 'Produção atualizada com sucesso!');
     }
 
     public function destroy(Production $production)

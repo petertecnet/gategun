@@ -1,190 +1,113 @@
 @extends('layouts.template')
 
 @section('content')
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-md-12">
+                <div class="h-100 bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content-center">
+                    <h2 class="text-center mt-2">Ingressos</h2>
+                </div>
+            </div>
+            <hr>
 
-            <div class="container-fluid pt-4 px-4">
+            <div class="container">
                 <div class="row g-4">
-                    
-                    <div class="col-md-12">
-                        <div class="h-100 bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content-center">
-                            <img src="{{ asset($producer->image_url) }}" alt="Imagem do Produtor" class="img-thumbnail circle" style="width: 20%; height: auto;">
-                            <h2 class="text-center mt-2">{{ $producer->name }}</h2>
-                            <p class="text-center">{{ $ownerName }}</p>
-                        </div>
-                    </div>
-                    
-                
-                    
-    <hr>
+                    <!-- Adicione esta div para envolver o loop de ingressos -->
+                    @if($tickets && count($tickets) > 0)
+                        @foreach ($tickets as $ticket)
+                            <div class="col-md">
+                                <div class="h-200 bg-gategun rounded p-5">
+                                    <div class="d-flex w-100 justify-content-center">
+                                        <h6 class="mb-0 text-gategunwhite">{{ $ticket->name }}</h6>
+                                    </div>
+                                    <div class="d-flex align-items-center border-bottom py-3">
+                                        <div class="w-100 ms-3">
+                                            <div class="d-flex w-100 justify-content-center">
+                                                <h6 class="text-gategunwhite">{{ 'R$ ' . number_format($ticket->price, 2, ',', '.') }}</h6>
+                                            </div>
 
-    <!-- Exibindo a lista de eventos como cards -->
-    <h2>Eventos  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
-       Novo
-    </button></h2>
-
-              
-        @if (count($events) > 0)
-        @foreach ($events as $event)
-            <div class="col-sm-12 col-md-6 col-xl-4">
-                <div class="h-100 bg-secondary rounded p-4">
-                    <a href="{{ route('events.show', $event->id) }}">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h6 class="mb-0">{{ $event->name }}</h6>
-                        </div>
-                        <div class="d-flex align-items-center border-bottom py-3">
-                            <img class="rounded-circle flex-shrink-0" src="{{ asset('storage/' . $event->image) }}" alt="" style="width: 40px; height: 40px;">
-                            <div class="w-100 ms-3">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-0">{{ $event->date->format('d/m/Y') }}</h6>
-                                    <small>
-                                        <p class="card-text">às {{ $event->time }}</p>
-                                    </small>
+                                            <div class="d-flex align-items-center">
+                                                <div class="d-flex w-100 justify-content-center">
+                                                    <button class="btn btn-sm btn-primary me-2" onclick="decreaseQuantity({{ $ticket->id }})">-</button>
+                                                    <input type="number" id="quantityInput-{{ $ticket->id }}" data-price="{{ $ticket->price }}" value="0" class="input-sm-gategun">
+                                                    <button class="btn btn-sm btn-primary ms-2" onclick="increaseQuantity({{ $ticket->id }})">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="col-md-12">
+                            <p>Nenhum ingresso cadastrado para este produtor.</p>
                         </div>
-                    </a>
-                </div>
+                    @endif
+                </div> <!-- Feche a div envolvendo o loop de ingressos -->
             </div>
-        @endforeach
-    @else
-        <p>Nenhum evento cadastrado para este produtor.</p>
-    @endif
+        </div>
+    </div>
+    <form action="{{ route('tickets.payment') }}" method="POST">
+        @csrf
+        <input type="hidden" name="totalvalue" id="totalvalue" value="0"> <!-- Adicionei o input hidden para guardar o valor total da compra -->
     
-            </div>
-        </div>
-
-        <div class="modal fade " id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl ">
-                <div class="modal-content bg-secondary text-info">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-info" id="addEventModalLabel">Cadastro de Evento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-                                <div class="col-md-10 ">
-                                  
-                                    <h8 class="text-center"> Mais visibilidade, alcance de público amplo, gestão eficiente, organização e facilidade na divulgação. Funcionalidades: Campos obrigatórios, imagem, registro, edição e exclusão.</h8>
-                                     
-                                        <h2 class="mb-4 text-info">     {{$producer->name }} - {{$producer->id }}</h2>
-                                        <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" id="producer_id" name="producer_id" value="{{ $producer->id  }}">
-                                            <input type="hidden" id="producer_name" name="producer_name" value="{{ $producer->name }}">
-                                       
-                                            <div class="row mb-3">
-                                                <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Imagem do Evento') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required>
-                                                    @error('image')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nome do Evento') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                                    @error('name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="row mb-3">
-                                                <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Descrição') }}</label>
-                                                <div class="col-md-6">
-                                                    <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="4" required>{{ old('description') }}</textarea>
-                                                    @error('description')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="row mb-3">
-                                                <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Data do Evento') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" required>
-                                                    @error('date')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="row mb-3">
-                                                <label for="time" class="col-md-4 col-form-label text-md-end">{{ __('Horário') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="time" type="time" class="form-control @error('time') is-invalid @enderror" name="time" value="{{ old('time') }}" required>
-                                                    @error('time')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="row mb-3">
-                                                <label for="location" class="col-md-4 col-form-label text-md-end">{{ __('Local') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location') }}" required>
-                                                    @error('location')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="row mb-3">
-                                                <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Preço') }}</label>
-                                                <div class="col-md-6">
-                                                    <input id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
-                                                    @error('price')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                    
-                                    
-                                            <div class="row mb-3">
-                                                <div class="col-md-6 offset-md-4">
-                                                    <button type="submit" class="btn btn-primary">
-                                                        {{ __('Cadastrar Evento') }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                  
-                                      
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-<script>
-    function openDeleteConfirmationModal(eventId) {
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = "{{ route('events.destroy', '') }}" + "/" + eventId;
-        $('#deleteConfirmationModal').modal('show');
-    }
-    function openAddEventModal(producerId) {
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = "{{ route('events.store', '') }}" + "/" + producerId;
-        $('#addEventModal').modal('show');
-    }
-</script>
+        <!-- Adicione este input hidden para o nome do ingresso -->
+        <input type="hidden" name="ticket_name" id="ticket_name" value="">
+    
+        <!-- Adicione este input hidden para a quantidade de ingressos solicitada -->
+        <input type="hidden" name="ticket_quantity" id="ticket_quantity" value="0">
+    
+        <!-- Adicione este input hidden para o valor unitário do ingresso -->
+        <input type="hidden" name="ticket_unit_price" id="ticket_unit_price" value="0">
+    
+        <button type="submit" class="btn btn-primary btn-fixed-gategun" id="finalizarCompraBtn">Finalizar compra R$ 0,00</button>
+    </form>
+    
+    <script>
+        function increaseQuantity(ticketId) {
+            const quantityInput = document.getElementById(`quantityInput-${ticketId}`);
+            const quantity = parseInt(quantityInput.value);
+            quantityInput.value = quantity + 1;
+            updateTotalValue();
+        }
+    
+        function decreaseQuantity(ticketId) {
+            const quantityInput = document.getElementById(`quantityInput-${ticketId}`);
+            const quantity = parseInt(quantityInput.value);
+            if (quantity > 0) {
+                quantityInput.value = quantity - 1;
+                updateTotalValue();
+            }
+        }
+    
+        function updateTotalValue() {
+            let totalValue = 0;
+            let totalQuantity = 0; // Variável para armazenar a quantidade total de ingressos
+    
+            const ticketInputs = document.querySelectorAll('[id^="quantityInput-"]');
+            ticketInputs.forEach((input) => {
+                const quantity = parseInt(input.value);
+                const ticketPrice = parseFloat(input.dataset.price);
+    
+                totalValue += ticketPrice * quantity;
+                totalQuantity += quantity; // Atualiza a quantidade total de ingressos
+            });
+    
+            const formattedTotalValue = totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('finalizarCompraBtn').innerText = `Finalizar compra ${formattedTotalValue}`;
+            document.getElementById('totalvalue').value = totalValue; // Atualiza o valor do input hidden com o valor total da compra
+            document.getElementById('ticket_name').value = 'Ingresso'; // Atualiza o valor do input hidden com o nome do ingresso
+            document.getElementById('ticket_quantity').value = totalQuantity; // Atualiza o valor do input hidden com a quantidade total de ingressos
+            document.getElementById('ticket_unit_price').value = totalValue / totalQuantity; // Atualiza o valor do input hidden com o valor unitário do ingresso
+        }
+    
+        function finalizePurchase() {
+            
+            // Aqui você pode fazer validações adicionais antes de enviar o formulário, se necessário.
+            // O formulário será enviado para a rota de pagamento 'tickets.payment'.
+            document.getElementById('finalizarCompraBtn').innerText = 'Processando...'; // Altera o texto do botão para "Processando"
+            document.getElementById('finalizarCompraBtn').disabled = true; // Desabilita o botão para evitar cliques repetidos
+            document.getElementById('finalizarCompraBtn').form.submit(); // Envia o formulário
+        }
+    </script>
 @endsection

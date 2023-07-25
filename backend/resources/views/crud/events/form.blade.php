@@ -1,47 +1,44 @@
-@csrf
-
-<div class="row">
-
-    <div class="col-md-8">
-
-        Curso:
-        <input type="text" name="nomedocurso" id="nomedocurso" value="{{ $cad->nomedocurso ?? old('nomedocurso') }}"
-            class="form-control">
+ @csrf
+    @method('PUT')
+    <div class="row">
+        <div class="col-md-6">
+            <label for="name">Nome do Evento:</label>
+            <input type="text" name="name" id="name" value="{{ $event->name }}" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="location">Local:</label>
+            <input type="text" name="location" id="location" value="{{ $event->location }}" class="form-control">
+        </div>
     </div>
-    <div class="col-md-4">
-
-        Quant. Max.:
-        <input type="text" name="qntmax" id="qntmax" value="{{ $cad->qntmax ?? old('qntmax') }}" class="form-control">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="date">Data:</label>
+            <input type="date" name="date" id="date" value="{{ $event->date }}" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="time">Horário:</label>
+            <input type="time" name="time" id="time" value="{{ $event->time }}" class="form-control">
+        </div>
     </div>
-    <div class="col-md-12">
-        <br>
-        Descrição:
-        <input type="text" name="descricao" id="descricao" value="{{ $cad->descricao ?? old('descricao') }}"
-            class="form-control">
-        <br>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="price">Preço:</label>
+            <input type="number" name="price" id="price" value="{{ $event->price }}" step="0.01" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="image">Imagem:</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
     </div>
-    <div class="col-md-4">
-
-        Categoria:
-        <input type="text" name="categoria" id="categoria" value="{{ $cad->categoria ?? old('categoria') }}"
-            class="form-control">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="description">Descrição:</label>
+            <textarea name="description" id="description" class="form-control">{{ $event->description }}</textarea>
+        </div>
     </div>
-    <div class="col-md-4">
-
-        Mensalidade:
-        <input type="text" name="mensalidade" id="mensalidade" value="{{ $cad->mensalidade ?? old('mensalidade') }}"
-            class="form-control">
+    <div class="row mt-3">
+        <div class="col-md-6 offset-md-3">
+            <button type="submit" class="btn btn-primary btn-block">Atualizar Evento</button> 
+        </div>
+        
     </div>
-    <div class="col-md-4">
-
-        Status:
-        <select class="select2bs4" name="status" id="status" style="width: 100%;">
-            <option {{ ($cad->status ?? old('status')) == 'Disponível' ? 'selected' : '' }} value="Disponível">
-                Disponível
-            </option>
-            <option {{ ($cad->status ?? old('status')) == 'Indisponível' ? 'selected' : '' }} value="Indisponível">
-                Indisponível</option>
-        </select>
-    </div>
-</div>
-<button type="subbmit" class="btn btn-primary addCompany">Salvar</button>

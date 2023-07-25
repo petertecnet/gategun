@@ -344,7 +344,11 @@
     align-items: center;
     text-align: center;
 }
-
+.img-event-sm-gategun{
+    
+    width: 10%;
+    height: auto;
+}
 .img-fluid-gategun  {
     width: 80%;
     height: auto;
@@ -363,4 +367,56 @@
 }
 .gategunwhite{
     color: #FFFFFF;
+}
+.img-event-gategun{
+    width: 100%;
+    height: auto;
+}
+.btn-fixed-gategun {
+    width: 50%;
+    height: auto;
+    position: fixed;
+    bottom: 10%;
+    right: 45%;
+    transform: translate(50%, 50%);
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 15px;
+    color: #000000;
+    background-color: #ffffff;
+    text-decoration: none;
+    z-index: 999;
+}
+
+.btn-fixed-gategun:hover {
+    color: #fff;
+    background-color: #000000;
+    padding: 15px 20px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .btn-fixed-gategun {
+        padding: 8px 16px;
+        font-size: 15px;
+    }
+}
+
+/* Responsividade para telas ainda menores */
+@media (max-width: 576px) {
+    .btn-fixed-gategun {
+        bottom: 40px;
+        width: 100%;
+        right: 50%;
+        padding: 10px 20px;
+        font-size: 15px;
+        
+    }
+}
+
+.input-sm-gategun {
+    width: 80px; /* Ajuste o tamanho conforme necessário */
+    padding: 5px;
+    font-size: 14px;
+    /* Adicione mais estilos conforme desejado */
 }
