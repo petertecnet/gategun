@@ -4,30 +4,17 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
 
-        <div class="col-md-6">
-
-            <div class="h-100 bg-secondary rounded p-4">
-
-                <img src="{{ asset($production->image) }}" alt="{{ $production->name }}" style="max-width: 50%; height: auto; display: block; margin: 0 auto;">
-
-                <h2 class="my-4 text-center">{{ $production->name }}</h2>
-                <div class="text-center mb-3">
-                <a href="{{ $production->location }}" target="_blank" class="btn btn-primary m-2">
-               
-                    Localização
+        <div class="col-md-12 ">
+            <div class="h-50 bg-dark rounded p-2">
+                <a href="{{ route('productions.show', $production->id) }}">
+                    
+                    <div class="d-flex align-items-center border-bottom py-3">
+                        <h4 class="mb-4">{{ $production->name }}</h4>
+                        <img class="rounded-circle flex-shrink-0" src="{{$production->image}}" alt="" style="width: 40px; height: 40px;">
+                                      
+                    </div>
                 </a>
-                </div>
-                @if(Auth::user()->id == $production->user_id)
-                <div class="text-center mb-3">
-                    <a href="{{ route('productions.edit', $production->id) }}" class="btn btn-warning">Editar Produção</a>
-
-                 </div>
-                @endif
-                <div class="text-center mb-3">
-                  </div>
-
             </div>
-
         </div>
 
         <div class="col-md-6">
@@ -47,7 +34,7 @@
 
                             <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                                <img src="{{ asset('storage/' . $event->image) }}" alt="" class="card-img-top img-event-sm-gategun" >
+                                <img src="{{ asset($event->image) }}" alt="" class="card-img-top img-event-sm-gategun"  onerror="this.src='/darkpan/img/logo.png'" >
                                 {{ $event->name }}
          
                                 <div>
@@ -81,8 +68,8 @@
 
 <!-- Modal Adicionar Novo Evento -->
 <div class="modal fade " id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog bg-secondary modal-xl">
-        <div class="modal-content bg-secondary">
+    <div class="modal-dialog bg-secondary modal-xl ">
+        <div class="modal-content bg-secondary form-gategun">
             <div class="modal-header">
                 <h5 class="modal-title" id="addEventModalLabel">Adicionar Novo Evento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

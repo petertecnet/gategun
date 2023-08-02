@@ -3,13 +3,23 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Bootstrap 5 Admin Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <title>
+       
+        @if(Route::currentRouteName() === 'events.show')  {{ $event->name }} - {{ $event->date }} - @endif
+        @if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif
+      
+        Gategun:  A solução perfeita para gerenciamento de eventos
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="
+     @if(Route::currentRouteName() === 'events.show')  {{ $event->description }} - @endif
+    @if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif 
+    Gategun é uma solução de gerenciamento de eventos poderosa e fácil de usar que permite criar e gerenciar eventos, vender ingressos, coletar pagamentos e se comunicar com os participantes."
+  
+    >
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('darkpan/img/logo.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,28 +41,28 @@
     <link href="darkpan/css/style.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container-fluid position-relative d-flex p-0">
+<body style="">
+    <div class="container-fluid position-relative d-flex p-0" style="opacity: 0.9">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <img src="darkpan/img/logo.png" alt="logo da gategun" class="logoimgspping">
+            <div class="spinner-border text-dark" style="width: 200px; height: auto;" role="status">
+                <img src="{{ asset('darkpan/img/logo.png') }}" alt="logo da gategun') }}" class="logoimgspping">
             </div>
         </div>
         <!-- Spinner End -->
 
 
-        <!-- Sign In Start -->
-        <div class="container-fluid">
+        <!-- Sign In Start --> 
+        <div class="container-fluid" >
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class=" col-md-6 ">
-                    <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3 auth-form-gategun text-white" > 
+                        <div class="d-flex align-items-center justify-content-between mb-3" style="border: 1px #white">
                             <a href="/" class="">
                                 <img src="darkpan/img/logo.png" alt="logo da gategun" class="logoimg">
                             </a>
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login') }}" >
                         @csrf
 
                         <div class="row mb-3">
@@ -89,7 +99,7 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                                        {{ __('Salvar') }}
                                     </label>
                                 </div>
                             </div>
@@ -99,7 +109,7 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
-                                </button>
+                                </button><hr>
                                 <a class="btn btn-link" href="{{ route('register') }}">
                                     {{ __('Novo cadastro') }}
                                 </a>

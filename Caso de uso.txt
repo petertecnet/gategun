@@ -1,0 +1,37 @@
+Registrar Usuário:
+
+Descrição: Um usuário pode se registrar no sistema fornecendo seu nome, e-mail e senha. Após o registro bem-sucedido, o usuário pode fazer login no sistema.
+Login:
+
+Descrição: Um usuário registrado pode fazer login no sistema usando seu e-mail e senha.
+Criar Evento:
+
+Descrição: Um usuário autenticado pode criar eventos. Para criar um evento, o usuário deve fornecer informações como nome, descrição, data, hora, local, preço, imagem, etc.
+Adicionar Ingresso ao Carrinho:
+
+Descrição: Um usuário autenticado pode navegar pela lista de eventos disponíveis e adicionar ingressos ao seu carrinho de compras. O usuário seleciona o evento desejado, escolhe o tipo e a quantidade de ingressos e adiciona-os ao carrinho.
+Visualizar Carrinho:
+
+Descrição: Um usuário autenticado pode visualizar os itens em seu carrinho de compras. Os itens exibidos incluem os ingressos selecionados com detalhes como tipo, quantidade, preço, etc.
+Atualizar Quantidade de Ingressos no Carrinho:
+
+Descrição: Um usuário autenticado pode modificar a quantidade de ingressos no carrinho. Eles podem aumentar ou diminuir a quantidade de ingressos antes de fazer o checkout.
+Remover Ingresso do Carrinho:
+
+Descrição: Um usuário autenticado pode remover ingressos específicos do carrinho antes de fazer o checkout.
+Realizar Checkout:
+
+Descrição: Um usuário autenticado pode realizar o checkout dos ingressos adicionados ao carrinho. Após o checkout, o carrinho é marcado como "pago" e os ingressos são registrados como pertencentes ao usuário.
+Gerar QR Code para Pagamento:
+
+Descrição: Após o checkout, o sistema gera um QR code para pagamento dos ingressos. Esse QR code é usado pelo usuário para efetuar o pagamento do pedido.
+Verificar Status do Pagamento:
+
+Descrição: O sistema verifica periodicamente o status do pagamento associado ao QR code gerado. Quando o pagamento é efetuado com sucesso, o status é atualizado no sistema, e os ingressos são marcados como "utilizados".
+Visualizar Eventos Criados pelo Usuário:
+
+Descrição: Um usuário autenticado pode visualizar os eventos que eles criaram. Isso permite que o usuário gerencie seus eventos, faça alterações e adicione novos eventos.
+Logout:
+
+Descrição: Um usuário autenticado pode fazer logout do sistema para encerrar a sessão atual.
+Esses são alguns dos principais casos de uso identificados com base nos códigos que você compartilhou. Os casos de uso representam as principais funcionalidades e interações que os usuários têm com o sistema da Gategun.

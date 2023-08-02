@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Ticket extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'event_id',
-        'event_name',
-        'production_name',
         'name',
         'type',
         'price',
@@ -22,10 +22,12 @@ class Ticket extends Model
     ];
 
     // Relação com o model Event (um ingresso pertence a um evento)
-    public function event()
+    public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
-    }  public function production()
+    }
+    // Relação com o model Production (um ingresso pertence a uma produção)
+    public function production()
     {
         return $this->belongsTo(Production::class);
     }

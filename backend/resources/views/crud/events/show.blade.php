@@ -2,178 +2,240 @@
 
 @section('content')
 
-<a href="{{ route('tickets.show', $event->id) }}" class="btn btn-primary btn-fixed-gategun">Ingressos R${{$event->price}}</a>
-<div class="container-fluid pt-4 px-4 ">
+<div class="container-fluid pt-4 px-4">
     <div class="row g-4">  
+        <div class="col-md-12">
+            <div class="bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content">
+                <h2>{{$event->name}}</h2> 
+                  <span>{{ \Carbon\Carbon::parse($event->date)->translatedFormat('l j M') }} das
+                    {{ \Carbon\Carbon::parse($event->time)->format('H:i') }}
+                    às {{ \Carbon\Carbon::parse($event->end_time)->format('H:i') }}</span>
+                    <img class="rounded-circle flex-shrink-0" src="{{ asset($event->production->image) }}" alt="" style="width: 40px; height: 40px;">
+                   
+                <span>{{$event->production->name}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row justify-content-center">
         
         <div class="col-md-8">
-            <div class=" bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content">
-                <img src="{{ asset('storage/' . $event->image) }}" alt="" class="card-img-top img-event-gategun" >
-                
-            </div>
+            <img src="{{ asset($event->image) }}" alt="" class="img-fluid" onerror="this.src='/darkpan/img/logo.png'">
         </div>
-              
+      
         <div class="col-md-4">
-            <div class="h-10 bg-secondary rounded p-4 d-flex flex-column align-items-center justify-content-">
-                <p class="text-info">    {{$event->name}} </p>
-                <a href="https://www.google.com/maps?q={{ $event->location }}" target="_blank" class="btn btn-primary m-2">
-                    <i class="fa-solid fa-location"></i> 
-                    Localização
-                </a>
-                <p class="text-primary">       <a href="{{ route('productions.show', $event->production_id) }}" class="text-primary "> {{ $event->production_name }}</a>
-                </p>
-            <hr class="bg-primary">
-            <p> {{ $event->date->formatLocalized('%A') }}</p>
-            
-
-                <p>   {{ $event->date->format('d/m/Y') }} ás {{ $event->time }} </p> 
-                <p>R${{ $event->price }}</p> 
+            <div class="h-100 bg-secondary rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                     <img class="rounded-circle flex-shrink-0" src="{{ asset($event->production->image) }}" alt="" style="width: 40px; height: 40px;">
+                   
+                    <p>{{ \Carbon\Carbon::parse($event->date)->translatedFormat('l ') }} </p>
+                </div>
+                <div class="d-flex align-items-center border-bottom py-3">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 justify-content-between">
+                        </div>
+                        <ul>
+                            @foreach ($event->tickets as $ticket)
+                                <li>{{ $ticket->name }} - R$ {{ $ticket->price }}
+                                    <!-- E outros atributos que você tenha no modelo Ticket -->
+                                </li>
+                            @endforeach
+                        </ul>
+                        <br>
+                    </div>
+                </div>
+                <hr>
                 
-               
-                                
+                <span class="text-primary">{{ \Carbon\Carbon::parse($event->date)->translatedFormat('l j M') }} das
+                    {{ \Carbon\Carbon::parse($event->time)->format('H:i') }}
+                    às {{ \Carbon\Carbon::parse($event->end_time)->format('H:i') }}</span>
+                    <hr>
+                    
+                   <a href="{{$event->production->location}}" class="btn btn-success">  <i class="fa fa-map-marker" aria-hidden="true"></i> Localização</a>
+                    
+                <hr>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary rounded p-4 d-flex flex-column justify-content">
+        <h6>{{ $event->description }}</h6>
         <hr>
-        <div class="col-md-12">
-            <div class="accordion-item bg-transparent  bg-info">
-                <h2 class="accordion-header  align-items-center justify-content" id="headingTwo">
-                    <button class="accordion-button collapsed " type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                        aria-expanded="false" aria-controls="collapseTwo">
-                       Descrição
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse"
-                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        {{$event->description}} 
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card bg-secondary">
+        <div class="card-body">
+            @auth
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <div class="h-100 bg-secondary rounded p-4">
+                            <form id="commentForm" data-event-id="{{ $event->id }}" action="{{ route('events.storeComment', $event->id) }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <textarea name="comment" id="comment" rows="3" class="form-control"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="submitComment">Enviar Comentário</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    <div class="col-md-12 ">
-        <div class="bg-secondary rounded h-200 p-4">
-            <iframe
-            width="100%"
-            height="100%"
-            frameborder="0"
-            style="border: 0"
-            src="https://www.google.com.br/maps?q=72225-509,%20Brasil&output=embed"
-            allowfullscreen
-        ></iframe>
-        </div>
-    </div>
-    </div>
-</div>
+            @endauth
 
-<!-- Modal para cadastro de ingresso -->
-<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content bg-secondary">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEventModalLabel">Cadastrar Ingresso</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulário para cadastrar o ingresso -->
-                <form action="{{ route('tickets.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="event_id" id="event_id" value="{{ $event->id }}">
-                    <div class="row mb-3">
-                        <label for="ticket_type" class="col-md-4 col-form-label text-md-end">{{ __('Tipo de Ingresso') }}</label>
-                        <div class="col-md-6">
-                            <select id="ticket_type" class="form-control @error('ticket_type') is-invalid @enderror" name="ticket_type" required>
-                                <option value="" disabled selected>Selecione o tipo de ingresso</option>
-                                <option value="VIP">VIP</option>
-                                <option value="Normal">Normal</option>
-                                <option value="Estudante">Estudante</option>
-                                <!-- Adicione mais opções de acordo com a necessidade -->
-                            </select>
-                            @error('ticket_type')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                     <div class="row mb-3">
-                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nome do Ingresso') }}</label>
-                        <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Quantidade de Ingressos Disponíveis') }}</label>
-                        <div class="col-md-6">
-                            <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" required>
-                            @error('quantity')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="time" class="col-md-4 col-form-label text-md-end">{{ __('Horário limite de entrada') }}</label>
-                        <div class="col-md-6">
-                            <input id="time" type="time" class="form-control @error('time') is-invalid @enderror" name="time" value="{{ old('time') }}" required>
-                            @error('time')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                
-                    <div class="row mb-3">
-                        <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Preço') }}</label>
-                        <div class="col-md-6">
-                            <input id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
-                            @error('price')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                
-                
-                    <div class="row mb-3">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Cadastrar Ingresso') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                
+            <div id="commentsContainer">
+                <!-- Aqui serão exibidos os comentários -->
             </div>
         </div>
     </div>
 </div>
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function decreaseQuantity() {
-        const inputElement = document.getElementById('quantityInput');
-        let currentValue = parseInt(inputElement.value);
+    // Função para atualizar a lista de comentários
+    function updateComments() {
+        var eventId = $('#commentForm').data('event-id');
+        $.ajax({
+            url: '/events/' + eventId + '/getComments',
+            type: 'GET',
+            success: function (data) {
+                // Limpa a lista de comentários existente
+                $('#commentsContainer').empty();
 
-        if (currentValue > 0) {
-            currentValue--;
-            inputElement.value = currentValue;
+                // Adiciona os novos comentários à lista
+                data.comments.forEach(function (comment) {
+                    var commentHtml = createCommentHtml(comment);
+                    $('#commentsContainer').append(commentHtml);
+                });
+            },
+            error: function (xhr) {
+                // Tratar erros, caso ocorram
+            }
+        });
+    }
+
+    var colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00']; // Lista de cores
+
+    function getUserColor(username) {
+        // Calcular o índice do usuário com base em seu nome de usuário
+        var index = 0;
+        for (var i = 0; i < username.length; i++) {
+            index += username.charCodeAt(i);
+        }
+        index %= colors.length;
+        return colors[index];
+    }
+
+    function formatDate(dateString) {
+        // Criar um objeto Date usando a string da data
+        var date = new Date(dateString);
+
+        // Formatar a data no padrão desejado (dd/mm/yyyy HH:mm:ss, por exemplo)
+        var formattedDate = ('0' + date.getDate()).slice(-2) + ' ' + date.toLocaleString('default', { month: 'short' }) + ' ' + date.getFullYear();
+        var hours = ('0' + date.getHours()).slice(-2);
+        var minutes = ('0' + date.getMinutes()).slice(-2);
+        formattedDate += ' das ' + hours + ':' + minutes;
+
+        return formattedDate;
+    }
+
+    function createCommentHtml(comment) {
+        var userColor = getUserColor(comment.user.name); // Obter a cor para o usuário
+        var commentHtml = '<div class="d-flex align-items-center border-bottom py-3" style="color: ' + userColor + ';">' +
+            '<div class="w-100 ms-3">' +
+            '<div class="d-flex w-100 justify-content-between">' +
+            '<small></small>' +
+            '</div>' +
+            '<h6>' + comment.user.name + ': ' + comment.comment + '</h6><br><span>ás: ' + formatDate(comment.created_at) + '</span>' +
+            '</div>' +
+            '</div>';
+        return commentHtml;
+    }
+
+    $(document).ready(function () {
+        // Evento de clique para enviar o formulário de comentário
+        $('#submitComment').on('click', function () {
+            var eventId = $('#commentForm').data('event-id');
+            var comment = $('#comment').val();
+
+            $.ajax({
+                url: '/events/' + eventId + '/storeComment',
+                type: 'POST',
+                data: {
+                    comment: comment,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    // Limpar o campo de comentário
+                    $('#comment').val('');
+
+                    // Atualizar a lista de comentários
+                    updateComments();
+                },
+                error: function (xhr) {
+                    // Tratar erros, caso ocorram
+                }
+            });
+        });
+
+        // Atualizar a lista de comentários a cada 5 segundos (ou o valor desejado)
+        setInterval(function () {
+            updateComments();
+        }, 1000); // 5 segundos (1000ms = 1 segundo)
+
+        // Chamar a função para atualizar a lista de comentários imediatamente após a página ser carregada
+        updateComments();
+    });
+</script>
+<script>
+    // Função para atualizar o cronômetro
+    function updateCountdown() {
+        var eventDateTime = moment("{{ $event->date }} {{ $event->time }}", "YYYY-MM-DD HH:mm"); // Data e hora do evento no formato "ano-dia-mes hora:minuto"
+        var now = moment(); // Data e hora atual
+
+        // Verifica se o evento ainda não ocorreu
+        if (eventDateTime.isAfter(now)) {
+            // Calcula a diferença entre a data do evento e a data atual
+            var timeRemaining = eventDateTime.diff(now);
+
+            // Formata a diferença em dias, horas, minutos e segundos
+            var duration = moment.duration(timeRemaining);
+            var days = duration.days();
+            var hours = duration.hours();
+            var minutes = duration.minutes();
+            var seconds = duration.seconds();
+
+            // Obtém o dia da semana e o nome abreviado do mês do evento
+            var dayOfWeek = eventDateTime.format("dddd");
+            var dayOfMonth = eventDateTime.format("D");
+            var monthAbbr = eventDateTime.format("MMM");
+
+            // Formata a hora de início do evento
+            var startTime = eventDateTime.format("HH:mm");
+
+            // Cria a string de exibição do cronômetro
+            var countdownStr = dayOfWeek + " " + dayOfMonth + " " + monthAbbr + " das " + startTime;
+
+            // Atualiza o elemento HTML com o cronômetro
+            document.getElementById("countdown").innerHTML = "em " + days + " dias, " + hours + " horas, " + minutes + " minutos e " + seconds + " segundos.";
+        } else {
+            // Se o evento já ocorreu, exibe uma mensagem indicando isso
+            document.getElementById("countdown").innerHTML = "O evento já ocorreu!";
         }
     }
 
-    function increaseQuantity() {
-        const inputElement = document.getElementById('quantityInput');
-        let currentValue = parseInt(inputElement.value);
+    // Atualiza o cronômetro a cada segundo
+    setInterval(updateCountdown, 1000); // 1000 milissegundos = 1 segundo
 
-        currentValue++;
-        inputElement.value = currentValue;
-    }
+    // Chama a função para atualizar o cronômetro imediatamente após a página ser carregada
+    updateCountdown();
 </script>
+
 @endsection

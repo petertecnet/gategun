@@ -3,10 +3,20 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Bootstrap 5 Admin Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <title>
+       
+        @if(Route::currentRouteName() === 'events.show')  {{ $event->name }} - {{ $event->date }} - @endif
+        @if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif
+      
+        Gategun:  A solução perfeita para gerenciamento de eventos
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="
+     @if(Route::currentRouteName() === 'events.show')  {{ $event->description }} - @endif
+    @if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif 
+    Gategun é uma solução de gerenciamento de eventos poderosa e fácil de usar que permite criar e gerenciar eventos, vender ingressos, coletar pagamentos e se comunicar com os participantes."
+  
+    >
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -35,8 +45,8 @@
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <img src="darkpan/img/logo.png" alt="logo da gategun" class="logoimgspping">
+            <div class="spinner-border text-dark" style="width: 200px; height: auto;" role="status">
+                <img src="{{ asset('darkpan/img/logo.png') }}" alt="logo da gategun') }}" class="logoimgspping">
             </div>
         </div>
         <!-- Spinner End -->
@@ -46,7 +56,7 @@
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class=" col-md-6 ">
-                    <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                    <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3 auth-form-gategun text-white">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="/" class="">
                                 <img src="darkpan/img/logo.png" alt="logo da gategun" class="logoimg">
@@ -55,7 +65,7 @@
                             @csrf
     
                             <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
     
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -69,7 +79,7 @@
                             </div>
     
                             <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email ') }}</label>
     
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -83,7 +93,7 @@
                             </div>
     
                             <div class="row mb-3">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Senha') }}</label>
     
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -97,7 +107,7 @@
                             </div>
     
                             <div class="row mb-3">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar senha') }}</label>
     
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -109,6 +119,15 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Register') }}
                                     </button>
+                                    <hr>
+                                <a class="btn btn-link" href="{{ route('login') }}">
+                                    {{ __('Jà tem cadastro?') }}
+                                </a>
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Esqueceu a senha?') }}
+                                    </a>
+                                @endif
                                 </div>
                             </div>
                         </form>

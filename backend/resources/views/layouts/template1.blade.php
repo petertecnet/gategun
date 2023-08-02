@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Global</title>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="HTML5 website template">
-  <meta name="keywords" content="global, template, html, sass, jquery">
+  <title>
+       
+    @if(Route::currentRouteName() === 'events.show')  {{ $event->name }} - {{ $event->date }} - @endif
+    @if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif
+  
+    Gategun:  A solução perfeita para gerenciamento de eventos
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+ @if(Route::currentRouteName() === 'events.show')  {{ $event->description }} - @endif
+@if(Route::currentRouteName() === 'productions.show')  {{ $production->name }} - @endif 
+Gategun é uma solução de gerenciamento de eventos poderosa e fácil de usar que permite criar e gerenciar eventos, vender ingressos, coletar pagamentos e se comunicar com os participantes."
+
+>
   <meta name="author" content="Bucky Maler">
-  <link rel="stylesheet" href="global/assets/css/main.css">
 </head>
 <body>
 

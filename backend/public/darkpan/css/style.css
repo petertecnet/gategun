@@ -301,7 +301,7 @@
 .logoimg {
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 100px;
     width: auto;
 }
 .logoimgspping {
@@ -372,6 +372,7 @@
     width: 100%;
     height: auto;
 }
+/* Styles for the fixed button */
 .btn-fixed-gategun {
     width: 50%;
     height: auto;
@@ -381,19 +382,42 @@
     transform: translate(50%, 50%);
     padding: 10px 20px;
     border-radius: 40px;
-    font-size: 15px;
-    color: #000000;
-    background-color: #ffffff;
+    font-size: 20px;
+    color: #fefefe;
+    background-color: #ff0000;
     text-decoration: none;
     z-index: 999;
+    box-shadow: 0 0 10px rgba(119, 62, 62, 0.3);
+    animation: blinkAnimation 0.5s infinite cubic-bezier(0.76, 0.29, 1, 1);
 }
 
+/* Define the animation keyframes for blinking */
+@keyframes blinkAnimation {
+    0%, 100% {
+        background-color: #ff0000;
+        box-shadow: 0 0 10px rgb(255, 130, 130);
+    }
+    50% {
+        box-shadow: 0 0 20px rgb(253, 253, 253);
+    }
+    75% {
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    }
+    
+    100% {
+        background-color: #ff0000;
+        box-shadow: 0 0 10px rgb(255, 130, 130);;
+    }
+}
+
+/* Styles for the button on hover */
 .btn-fixed-gategun:hover {
-    color: #fff;
-    background-color: #000000;
-    padding: 15px 20px;
+    /* Stop the animation when the mouse is over the button */
+    animation-play-state: paused;
+    background-color: #ff0606;
+    box-shadow: 0 0 20px rgba(255, 135, 135, 0.5);
+    padding: 10px;
 }
-
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
     .btn-fixed-gategun {
@@ -420,3 +444,182 @@
     font-size: 14px;
     /* Adicione mais estilos conforme desejado */
 }
+   .item-card {
+        background-color: #1a1a1a;
+        border: 1px solid #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        color: #FFF;
+    }
+
+    .item-card .card-header {background: linear-gradient(to right, #f70000, #8b0000);
+        color: #FFF;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 8px 16px;
+        border-radius: 6px 6px 0 0;
+        text-align: center;
+    }
+
+    .item-card .card-body {
+        background: linear-gradient(to right,  #f70000, #8b0000);
+        padding: 12px;
+        border-radius: 0 0 6px 6px;
+    }
+
+    .item-card .card-body p {
+        margin: 8px 0;
+        text-align: center;
+    }
+
+    .item-card .card-footer {
+        background-color: #000;
+        padding: 12px;
+        border-radius: 0 0 6px 6px;
+        text-align: right;
+    }
+
+    .item-card .card-footer button {
+        background-color: #FF4500;
+        color: #FFF;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .item-card .card-footer button i {
+        margin-right: 4px;
+    }
+
+    .card-gategun {
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        background-color: #ff0000;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 100px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .swiper-container {
+        width: 100%;
+        padding: 20px 0;
+    }
+    
+    .swiper-slide {
+        text-align: center;
+    }
+    
+    .date-circle {
+      
+        background-image: url('/darkpan/img/backgroundate.png');
+        background-size: cover;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .date-month{
+        
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+    }
+    .date-day {
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .date-number {
+        font-size: 50px;
+        font-weight: bold;
+        color: white;
+    }
+    .swiper-container {
+        overflow-x: auto;
+    }
+
+    .swiper-slide {
+        white-space: nowrap;
+    }
+    .swiper-container {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .swiper-slide {
+        display: inline-block;
+    }
+
+    
+
+    .date-day {
+        margin-bottom: 1px;
+        
+        color: white;
+    }
+    .logomobile{
+        width: 55%;
+        height: auto;
+    }
+
+
+    .bg-ticket-gategun{
+        background-image: url('/darkpan/img/ticketbackground.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid #ffffff;
+         
+    }
+    .bg-ticket-gategun:hover {
+        background-image: url('/darkpan/img/ticketbackground2.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 2px solid #ff0000;
+        padding: 500px;
+    }
+    .bg-ticket-cart-gategun{
+        background-image: url('/darkpan/img/ticketbackground.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid #ffffff;  
+    }
+    .bg-ticket-cart-gategun:hover{
+        background-image: url('/darkpan/img/ticketbackground.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid #ff0000; 
+        padding: 1px; 
+    }
+    .auth-form-gategun{
+        background-image: url('/darkpan/img/backgroundlogomobile.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+
+    }
+    .form-gategun{
+        background-image: url('/darkpan/img/formgategun.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        
+        background-position: center center;
+    }
+    .fixed-column {
+     
+    position: fixed;
+    top: 0;    
+    z-index: 999;
+    margin-left: 70%;
+    width: 250px;
+    }
+    

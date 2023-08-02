@@ -35,7 +35,9 @@
                 <div class="card-header">     <a href="{{route('events.show', $event->id) }}"><button type="button"
                                 class="btn btn-info tet-white aling-right">
                                 {{$event->name}} </button></a></div>
-                <div class="card-body"><img src="{{ asset('storage/' . $event->image) }}" alt="" class="card-img-top img-event-sm-gategun " >
+                <div class="card-body">
+                    
+                    <img src="{{ asset($event->image) }}" alt="" class="card-img-top img-event-sm-gategun " >
               
                     <form action="{{ route('events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
@@ -120,6 +122,7 @@
                 <form action="{{ route('tickets.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="event_id" id="event_id" value="{{ $event->id }}">
+                    <input type="hidden" name="production_name" id="production_name" value="{{ $event->name }}">
                      <div class="row mb-3">
                         <label for="ticket_type" class="col-md-4 col-form-label text-md-end">{{ __('Tipo de Ingresso') }}</label>
                         <div class="col-md-6">
