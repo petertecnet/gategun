@@ -622,4 +622,314 @@
     margin-left: 70%;
     width: 250px;
     }
+    .ticket-column {
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        width: 100%;
+        padding: 1px;
+        border-radius: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+        position: relative; /* Adiciona uma posição relativa ao ticket */
+    }
     
+    .ticket-column h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .ticket-column h6 {
+        margin-top: 10;
+        font-size: 15px;
+        color: #333;
+    }
+    
+    .ticket-column hr {
+        margin-top: 10px;
+        margin-bottom: 50px;
+        border-color: #000000;
+    }
+    
+    .ticket-price {
+        
+        margin-top: 80px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .ticket-buttons {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .ticket-buttons .btn {
+        font-size: 13px;
+        border-radius: 20px;
+        cursor: pointer;
+        padding: 6px 15px;
+    }
+    
+    .ticket-content .btn-left {
+        border-radius: 15px;
+        background-color: #ff0000;
+        margin-right: 10px;
+        color: #fff;
+    }
+    
+    .ticket-content .btn-right {
+        
+        border-radius: 15px;
+        background-color: #000000;
+        color: #fff;
+    }
+    
+    .ticket-buttons .btn-primary:hover {
+        background-color: #232f3b;
+    }
+    .ticket-content{
+      background-color: #ffffff;
+      opacity: 0.9;
+      padding:30px;
+      border-radius: 20px;
+    }
+    .quantityFilde{
+        width: 35px;
+        padding: 6px;
+        font-size: 20px;
+    } 
+    .checkout-column {
+        width: 600px;
+        max-width: 100%;
+        background-color: #f0f0f0;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        position: sticky;
+        top: 250px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 767px) {
+        .checkout-column {
+            margin-top: -5px;
+            position: fixed;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95%;
+            /* max-width: 113%; */
+            background-color: #f0f0f0;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+        }
+    }
+    
+.logonav{
+    width: 20%;
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    .logonav{
+        width: 50%;
+        height: auto;
+    }
+}
+/* Estilo do dropdown */
+.dropdown-gategun {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-toggle-gategun {
+    text-align: center;
+    padding: 1px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu-gategun {
+  
+    width: 89% !important;
+    height: 600px;
+    left: -5px;
+    margin-left: -15px;
+    margin-right: 35px;
+    padding: 15px;
+    width: -38px;
+    display: none;
+    position: absolute;
+    top: 96%;
+    right: 342px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+
+
+
+  }
+  
+  .dropdown-menu-gategun a {
+    display: block;
+    padding: 15px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .dropdown-menu-gategun a:hover {
+    display: block;
+    padding: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 30px;
+    background-color: #000000;
+    opacity: 0.9;
+    
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+  }
+  @media (max-width: 767px) {
+    .dropdown-menu-gategun {
+    opacity: 0.9;
+    width: 367px !important;
+    height: auto;
+    left: -5px;
+    margin-left: -15px;
+    /* margin-right: 77px; */
+    padding: 15px;
+    width: -38px;
+    display: none;
+    position: absolute;
+    top: 115%;
+    right: 342px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    }
+}
+
+
+/* Estilo do footer */
+.footer-gategun {
+    padding: 30px 0;
+    font-family: Arial, sans-serif;
+    color: #fff; /* Cor do texto do footer */
+    background: linear-gradient(to right, #232f3b, #1a2229); /* Gradiente de cores do background */
+    animation: gradientAnimation 10s linear infinite; /* Animação do gradiente */
+  }
+  
+  /* Efeito de gradiente animado */
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .footer-gategun h3 {
+    color: #fff; /* Cor do texto dos títulos */
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .footer-gategun p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .social-media-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    max-width: 150px; /* Ajuste a largura conforme necessário */
+    margin: 0 auto;
+  }
+  
+  .social-media-list li {
+    margin-right: 10px;
+  }
+  
+  .social-media-list a {
+    color: #fff; /* Cor dos ícones de redes sociais */
+    font-size: 24px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2); /* Cor de fundo com transparência */
+  }
+  
+  .social-media-list a:hover {
+    transform: scale(1.1); /* Efeito de escala no hover */
+    transition: transform 0.2s ease-out;
+  }
+  
+  /* Estilo para ícones de redes sociais usando a biblioteca Font Awesome */
+  /* Certifique-se de incluir a biblioteca no seu projeto */
+  /* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> */
+  
+  /* Animação para o footer aparecer com um efeito de slide-up */
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Animação para os títulos do footer terem um efeito de pulsação */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Animação para o ícone de redes sociais girar no hover */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Aplicando as animações nos elementos */
+  .footer-gategun {
+    animation: slideUp 1s forwards;
+  }
+  
+  .footer-gategun h3 {
+    animation: pulse 2s infinite;
+  }
+  
+  .social-media-list a:hover {
+    animation: spin 1s infinite;
+  }
+  

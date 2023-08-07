@@ -18,6 +18,8 @@ class CreateTicketsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('event_id');
             $table->string('ticket_type');
+            
+            $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->timestamps();

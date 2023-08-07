@@ -9,9 +9,12 @@ use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
-
 class EventController extends Controller
-{
+{  
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $events = Event::all();

@@ -24,13 +24,23 @@
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
+ // Carrega a página com o sidebar fechado
+$(document).ready(function() {
+    $('.sidebar, .content').toggleClass("open");
+    return false;
+  });
+  
 
 
-    // Sidebar Toggler
-    $('.sidebar-toggler').click(function () {
-        $('.sidebar, .content').toggleClass("open");
-        return false;
-    });
+
+  // Sidebar Toggler
+  $('.sidebar-toggler').click(function () {
+    $('.sidebar, .content').toggleClass("open");
+    return true;
+  });
+
+  
+ 
 
 
     // Progress Bar

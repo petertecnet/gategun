@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\{Cart, Item};
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // Mostrar a lista de tickets
     public function index()
     {
@@ -81,6 +85,7 @@ class TicketController extends Controller
         $data = $request->validate([
             'event_id' => 'required|exists:events,id',
             'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
             'ticket_type' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|numeric|min:0',
@@ -97,7 +102,6 @@ class TicketController extends Controller
     {
        
     $tickets = Ticket::where('event_id', $id)->get();
-    $ticket =  Ticket::where('event_id', $id)->first();
         return view('crud.tickets.show', compact('tickets'));
     }
 
@@ -150,7 +154,6 @@ public function payment(Request $request)
     // Inicialize variáveis para o valor total e os itens do pedido
     $totalValue = 0;
     $items = [];
-dd($ticketsArray);
     // Calcule o valor total e crie os itens do pedido com base nos ingressos selecionados
     foreach ($ticketsArray  as $ticket) {
         $name = $ticket['name'];
@@ -244,7 +247,8 @@ public function checkPaymentStatus(Request $request)
         // Obtém o carrinho do usuário autenticado
         $user = Auth::user();
         $cart = Cart::where('user_id', $user->id)
-            ->where('is_paid', 0)
+        ->where('is_paid', 0)
+        ->where('idorder', $orderId)
             ->first();
 
         if ($status === 'paid') {

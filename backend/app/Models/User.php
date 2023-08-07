@@ -62,8 +62,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class, 'items', 'user_id', 'event_id');
     }
-    public function productions(): HasMany
+    public function production()
     {
         return $this->hasMany(Production::class);
     }
+    
 }

@@ -22,7 +22,7 @@
 <div class="container">
     <div class="row ">
         <div class="col-md-12">
-            <div class="card bg-secondary">
+            <div class="card bg-secondary form-gategun ">
                 <div class="card-header">{{$production->name}} </div>
                 <div class="card-body">
                     <img src="{{ asset($production->image) }}" alt="" class="card-img-top img-event-sm-gategun " >

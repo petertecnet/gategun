@@ -1,13 +1,31 @@
 <!-- Navbar Start -->
     <nav class="navbar navbar-expand bg-dark  sticky-top px-4 py-0" >
-        <a href="/" class="navbar-brand d-flex d-lg-none me-4">
-            <h2 class="text-primary mb-0">
-                <img src="{{ asset('darkpan/img/logo.png') }}" alt="logo da gategun" class="logomobile">
-            </h2>
-        </a>
-        <a href="#" class="sidebar-toggler flex-shrink-0">
-            <i class="fa fa-bars"></i>
-        </a>
+    
+    
+        <div class="dropdown-gategun">
+            <a href="#" class="dropdown-toggle-gategun bg-dark" onclick="toggleDropdown()">
+            <img src="{{ asset('darkpan/img/logo.png') }}"   class="logonav"> </a>
+            <div class="dropdown-menu-gategun" id="myDropdown">
+              <!-- Itens do dropdown -->
+              <a href="/" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Eventos</a>
+           <a href="/productions/all" class="nav-item nav-link {{ Request::is('productions/all') ? 'active' : '' }}"><i class="fa fa-square me-2"></i>Produção</a>
+           <a href="/tickets" class="nav-item nav-link {{ Request::is('tickets') ? 'active' : '' }}"><i class="fa fa-th me-2"></i>Meu ingressos</a>
+           <!-- Add more sidebar items as needed -->
+           <a href="/profile" class="nav-item nav-link {{ Request::is('profile') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Meu Perfil</a>
+           <a href="/settings" class="nav-item nav-link {{ Request::is('settings') ? 'active' : '' }}"><i class="fa fa-cog me-2"></i>Configurações</a>
+           <a href="/notifications" class="nav-item nav-link {{ Request::is('notifications') ? 'active' : '' }}"><i class="fa fa-bell me-2"></i>Notificações</a>
+           <a href="/help" class="nav-item nav-link {{ Request::is('help') ? 'active' : '' }}"><i class="fa fa-question-circle me-2"></i>Ajuda</a>
+           <a href="/contact" class="nav-item nav-link {{ Request::is('contact') ? 'active' : '' }}"><i class="fa fa-envelope me-2"></i>Contato</a>
+           <a href="{{ route('logout') }}" class="nav-item nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+               <i class="fa fa-sign-out-alt me-2"></i>Logout
+           </a>
+           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+               @csrf
+           </form>
+              <!-- Adicione mais itens conforme necessário -->
+            </div>
+          </div>
+          
         <form class="d-none d-md-flex ms-4">
             <input class="form-control bg-dark border-0" type="search" placeholder="Search">
         </form>

@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
+use App\Http\Middleware\AuthenticateUser;
 
 class FeedbackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(AuthenticateUser::class)->except('index'); // Aplica o middleware a todas as funções exceto 'index'
+    }
     // Exibe o formulário para fornecer feedback e avaliação
     public function showFeedbackForm($eventId)
     {

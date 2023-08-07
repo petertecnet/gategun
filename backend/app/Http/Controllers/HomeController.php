@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
+    
     /**
      * Create a new controller instance.
      *

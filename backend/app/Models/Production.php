@@ -11,8 +11,12 @@ class Production extends Model
 
     protected $fillable = [
         'name',
+        'type',
+        'description',
         'location',
+        'address',
         'image',
+        'capacity',
         'user_id',
         'user_name',
     ];
@@ -21,5 +25,11 @@ class Production extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    // Relacionamento com usuário - Uma produção pertence a um usuário
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

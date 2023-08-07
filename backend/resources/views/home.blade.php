@@ -48,7 +48,7 @@
         @endif
     </div>
 </div>
-@if($event)
+@if($events && count($events) > 0)
 <script >
     document.addEventListener("DOMContentLoaded", function () {
         // Inicializar swiper.js

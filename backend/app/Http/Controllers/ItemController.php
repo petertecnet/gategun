@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // Listar todos os itens
   public function index()
 {

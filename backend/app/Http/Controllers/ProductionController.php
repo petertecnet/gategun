@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Str;
 class ProductionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
 public function index()
 {
@@ -17,7 +21,7 @@ public function index()
     $user = Auth::user();
 
     // Obtém as produções associadas ao usuário logado
-    $productions = $user->productions;
+    $productions = $user->production;
 
     return view('crud.productions.index', compact('productions'));
 }
@@ -26,44 +30,57 @@ public function index()
     {
         return view('productions.create');
     }
-
+    // ...
+    
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location' => 'required|string|max:255',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'location' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+    ]);
 
-        $user = Auth::user();$imagePath = $request->image;
+    $user = Auth::user();
+    $directoryPath = public_path('productions');
 
-        $directoryPath = public_path('production/events');
-
-        if (!File::exists($directoryPath)) {
-            File::makeDirectory($directoryPath, 0755, true);
-        }
-
-        if ($request->hasFile('image')) {
-            $imgprod = $request->file('image');
-
-            // Redimensionar a imagem 
-            $image = Image::make($imgprod)->fit(125, 125);
-            $image->save($directoryPath . '/' . $imgprod->getClientOriginalName());
-
-            $imagePath = 'productions/events' . $imgprod->getClientOriginalName();
-        }
-        $production = new Production([
-            'name' => $request->name,
-            'image' => $imagePath,
-            'location' => $request->location,
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-        ]);
-
-        $production->save();
-        return redirect()->route('productions.index')->with('status', 'Produção cadastrada com sucesso!');
+    if (!File::exists($directoryPath)) {
+        File::makeDirectory($directoryPath, 0755, true);
     }
 
+    $imagePath = null;
+
+    if ($request->hasFile('image')) {
+        $imgprod = $request->file('image');
+
+        // Generate a unique name for the image using the timestamp
+        $imageName = $user->name . '-' . Str::slug($request->name) . '-' . time() . '.' . $imgprod->getClientOriginalExtension();
+
+        // Resize the image before saving
+        $image = Image::make($imgprod)->fit(125, 125);
+        $image->save($directoryPath . '/' . $imageName);
+
+        $imagePath = 'productions/' . $imageName;
+    }
+
+    $production = new Production([
+        'name' => $request->name,
+        'type' => $request->type,
+        'description' => $request->description,
+        'image' => $imagePath,
+        'location' => $request->location,
+        'address' => $request->address,
+        'capacity' => $request->capacity,
+        'user_id' => $user->id,
+        'user_name' => $user->name,
+    ]);
+
+    $production->save();
+
+    return redirect()->route('productions.index')->with('status', 'Produção cadastrada com sucesso!');
+}
+
+    
     public function show(Production $production)
     {
         // Obter os eventos associados à produção
@@ -81,36 +98,48 @@ public function index()
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'location' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
         ]);
-
-        $imagePath = $production->image;
-       
-        $directoryPath = public_path('productions/events');
-
-        if (!File::exists($directoryPath)) {
-            File::makeDirectory($directoryPath, 0755, true);
-        }
-
+    
+        // Verifica se foi enviada uma nova imagem
         if ($request->hasFile('image')) {
             $imgprod = $request->file('image');
-
-            // Redimensionar a imagem 
+    
+            // Define o diretório para salvar a imagem
+            $directoryPath = public_path('productions');
+    
+            if (!File::exists($directoryPath)) {
+                File::makeDirectory($directoryPath, 0755, true);
+            }
+            
+            $user = Auth::user();
+            $imageName = $user->name . '-' . Str::slug($request->name) . '-updated-' . time() . '.' . $imgprod->getClientOriginalExtension();
+    
+            // Redimensionar a nova imagem antes de salvar
             $image = Image::make($imgprod)->fit(125, 125);
-            $image->save($directoryPath . '/' . $imgprod->getClientOriginalName());
-
-            $imagePath = 'productions/events/' . $imgprod->getClientOriginalName();
-        } else {
-            // Caso a imagem não tenha sido enviada no request, manter a imagem atual do evento
-            $imagePath = $production->image;
+            $image->save($directoryPath . '/' . $imageName);
+    
+            // Remove a imagem antiga, se existir
+            if ($production->image) {
+                File::delete($directoryPath . '/' . $production->image);
+            }
+    
+            // Atualiza o caminho da imagem com o novo nome
+            $production->image = 'productions/' . $imageName;
         }
-        $production->update([
-            'name' => $request->name,
-            'image' => $imagePath,
-            'location' => $request->location,
-        ]);
-
+    
+        $production->name = $request->name;
+        $production->type = $request->type;
+        $production->description = $request->description;
+        $production->location = $request->location;
+        $production->address = $request->address;
+        $production->capacity = $request->capacity;
+        $production->save();
+    
         return redirect()->route('productions.show', $production->id)->with('success', 'Produção atualizada com sucesso!');
     }
+    
 
     public function destroy(Production $production)
     {
